@@ -1,0 +1,35 @@
+{% extends 'amazon/base.html' %}
+{% block title %}Amazon | Home{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="bg-warning text-dark py-5">
+    <div class="container text-center">
+        <h1 class="fw-bold">Welcome to Amazon Store</h1>
+        <p class="lead">Best products. Best prices. Fast delivery.</p>
+        <a href="{% url 'amazon:product_list' %}" class="btn btn-dark btn-lg mt-3">
+            Shop Now
+        </a>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="container py-5">
+    <div class="row text-center">
+        <div class="col-md-4">
+            <h5>🚚 Fast Delivery</h5>
+            <p class="text-muted">Quick & safe shipping</p>
+        </div>
+        <div class="col-md-4">
+            <h5>💳 Secure Payment</h5>
+            <p class="text-muted">100% protected payments</p>
+        </div>
+        <div class="col-md-4">
+            <h5>⭐ Top Quality</h5>
+            <p class="text-muted">Best rated products</p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

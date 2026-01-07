@@ -1,0 +1,39 @@
+{% extends 'amazon/base.html' %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <h2>Checkout</h2>
+
+    {% if message %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label>Coupon Code</label>
+            <input type="text" name="coupon" class="form-control">
+        </div>
+
+        <h5>Order Summary</h5>
+        <ul class="list-group mb-3">
+            {% for item in cart_items %}
+            <li class="list-group-item d-flex justify-content-between">
+                {{ item.name }} × {{ item.quantity }}
+                <span>₹{{ item.price }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h5>Total: ₹{{ total }}</h5>
+
+        <button class="btn btn-warning mt-3">
+            Place Order
+        </button>
+    </form>
+
+</div>
+{% endblock %}

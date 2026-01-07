@@ -1,0 +1,67 @@
+{% extends 'amazon/base.html' %}
+{% load static %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <h2 class="text-center mb-4">Our Products</h2>
+
+    <div class="row g-4">
+
+        {% for product in products %}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+
+                <!-- ✅ PRODUCT IMAGE (SAFE CHECK) -->
+                {% if product.image %}
+                    <img src="{{ product.image.url }}"
+                         class="card-img-top"
+                         alt="{{ product.name }}"
+                         style="height:220px;object-fit:cover;">
+                {% else %}
+                    <!-- fallback image (optional, does NOT affect logic) -->
+                    <img src="{% static 'amazon/no-image.png' %}"
+                         class="card-img-top"
+                         alt="No Image"
+                         style="height:220px;object-fit:cover;">
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+
+                    <p class="text-muted small">
+                        {{ product.description|truncatewords:15 }}
+                    </p>
+
+                    <h6 class="text-success fw-bold">
+                        ₹{{ product.price }}
+                    </h6>
+                </div>
+
+                <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                    <!-- ✅ DETAIL PAGE -->
+                    <a href="{% url 'amazon:product_detail' product.id %}"
+                       class="btn btn-outline-dark btn-sm">
+                        View
+                    </a>
+
+                    <!-- ✅ ADD TO CART -->
+                    <a href="{% url 'amazon:add_to_cart' product.id %}"
+                       class="btn btn-warning btn-sm">
+                        Add to Cart
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">
+            No products available.
+        </p>
+        {% endfor %}
+
+    </div>
+
+</div>
+{% endblock %}

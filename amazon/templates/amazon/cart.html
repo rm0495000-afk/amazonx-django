@@ -1,0 +1,48 @@
+{% extends 'amazon/base.html' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Your Cart</h2>
+
+    {% if cart_items %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>₹{{ item.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.price|floatformat:0|add:""|add:item.quantity }}</td>
+                    <td>
+                        <a href="{% url 'amazon:remove_from_cart' forloop.counter %}"
+                           class="btn btn-sm btn-danger">
+                           Remove
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h4 class="text-end">Total: ₹{{ total }}</h4>
+
+        <a href="{% url 'amazon:clear_cart' %}"
+           class="btn btn-outline-danger mt-3">
+           Clear Cart
+        </a>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}
