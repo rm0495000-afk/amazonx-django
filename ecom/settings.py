@@ -15,12 +15,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # --------------------------------------------------
 SECRET_KEY = 'django-insecure-9wixmm73*kzpfbn%5d!ky!k7+$4mazbhlk4d)^w@@1#g6ot(=t'
-DEBUG = True
+DEBUG = True   # Render-la ippo True (login create panna)
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    ".onrender.com",   # ✅ Render support
+    ".onrender.com",
 ]
 
 
@@ -28,17 +28,16 @@ ALLOWED_HOSTS = [
 # APPLICATIONS
 # --------------------------------------------------
 INSTALLED_APPS = [
-    'unfold',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "unfold",                     # 🔥 MUST be first
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 
-    'amazon.apps.AmazonConfig',
+    "amazon.apps.AmazonConfig",
 ]
-
 
 
 # --------------------------------------------------
@@ -67,10 +66,7 @@ ROOT_URLCONF = "ecom.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-
-        # ✅ App templates (amazon/templates/amazon/...)
         "DIRS": [BASE_DIR / "amazon" / "templates"],
-
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -122,16 +118,18 @@ USE_TZ = True
 
 
 # --------------------------------------------------
-# STATIC FILES (RENDER SAFE)
+# STATIC FILES
 # --------------------------------------------------
 STATIC_URL = "/static/"
-
-# 🔥 REQUIRED for django-unfold + Render
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "amazon" / "static",
+]
 
 
 # --------------------------------------------------
-# MEDIA FILES (IMAGES)
+# MEDIA FILES
 # --------------------------------------------------
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -144,7 +142,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # --------------------------------------------------
-# 🔥 DJANGO-UNFOLD CONFIG (MINIMAL & SAFE)
+# DJANGO-UNFOLD CONFIG
 # --------------------------------------------------
 UNFOLD = {
     "SITE_TITLE": "AmazonX Admin",
@@ -152,12 +150,32 @@ UNFOLD = {
     "SITE_URL": "/",
     "SHOW_VIEW_ON_SITE": True,
 
-    # Minimal color config (no Tailwind build)
+    "STYLES": [
+        "/static/admin_fix.css",
+    ],
+
     "COLORS": {
         "primary": {
-            "500": "99 102 241",   # Indigo
+            "500": "99 102 241",
             "600": "79 70 229",
             "700": "67 56 202",
         }
     },
 }
+
+
+# --------------------------------------------------
+# 🔥 TEMP AUTO ADMIN (RENDER LOGIN FIX)
+# --------------------------------------------------
+# ⚠️ REMOVE THIS BLOCK AFTER LOGIN SUCCESS
+if DEBUG:
+    try:
+        from django.contrib.auth.models import User
+        if not User.objects.filter(username="admin").exists():
+            User.objects.create_superuser(
+                username="admin",
+                email="admin@example.com",
+                password="admin123"
+            )
+    except Exception:
+        pass
