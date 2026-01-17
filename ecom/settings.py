@@ -26,9 +26,8 @@ ALLOWED_HOSTS = [
 
 # --------------------------------------------------
 # APPLICATIONS
-# --------------------------------------------------
 INSTALLED_APPS = [
-    "jazzmin",               # 🔥 MUST BE FIRST
+    "jazzmin",   # 🔥 MUST BE ABSOLUTE FIRST
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -39,22 +38,15 @@ INSTALLED_APPS = [
     "amazon.apps.AmazonConfig",
 ]
 
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+
+
 # --------------------------------------------------
 # JAZZMIN ADMIN THEME CONFIG
 # --------------------------------------------------
-JAZZMIN_SETTINGS = {
-    "site_title": "AmazonX Admin",
-    "site_header": "AmazonX Dashboard",
-    "site_brand": "AmazonX",
-    "welcome_sign": "Welcome to AmazonX Admin",
-    "copyright": "AmazonX",
-    "topmenu_links": [
-        {"name": "Home", "url": "/", "new_window": True},
-        {"name": "View Site", "url": "/", "new_window": True},
-    ],
-    "show_sidebar": True,
-    "navigation_expanded": True,
-}
+
 
 
 
@@ -137,14 +129,8 @@ USE_TZ = True
 
 
 # --------------------------------------------------
-# STATIC FILES
-# --------------------------------------------------
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_DIRS = [
-    BASE_DIR / "amazon" / "static",
-]
+
 
 
 # --------------------------------------------------
@@ -159,28 +145,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 # --------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
-# --------------------------------------------------
-# DJANGO-UNFOLD CONFIG
-# --------------------------------------------------
-UNFOLD = {
-    "SITE_TITLE": "AmazonX Admin",
-    "SITE_HEADER": "AmazonX Dashboard",
-    "SITE_URL": "/",
-    "SHOW_VIEW_ON_SITE": True,
-
-    "STYLES": [
-        "/static/admin_fix.css",
-    ],
-
-    "COLORS": {
-        "primary": {
-            "500": "99 102 241",
-            "600": "79 70 229",
-            "700": "67 56 202",
-        }
-    },
-}
 
 
 # --------------------------------------------------
@@ -198,3 +162,13 @@ if DEBUG:
             )
     except Exception:
         pass
+
+JAZZMIN_SETTINGS = {
+    "site_title": "AmazonX Admin",
+    "site_header": "AmazonX Dashboard",
+    "site_brand": "AmazonX",
+    "welcome_sign": "Welcome to AmazonX Admin",
+    "copyright": "AmazonX",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+}
