@@ -28,7 +28,7 @@ ALLOWED_HOSTS = [
 # APPLICATIONS
 # --------------------------------------------------
 INSTALLED_APPS = [
-    "unfold",                     # 🔥 MUST be first
+    "jazzmin",               # 🔥 MUST BE FIRST
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -38,6 +38,25 @@ INSTALLED_APPS = [
 
     "amazon.apps.AmazonConfig",
 ]
+
+# --------------------------------------------------
+# JAZZMIN ADMIN THEME CONFIG
+# --------------------------------------------------
+JAZZMIN_SETTINGS = {
+    "site_title": "AmazonX Admin",
+    "site_header": "AmazonX Dashboard",
+    "site_brand": "AmazonX",
+    "welcome_sign": "Welcome to AmazonX Admin",
+    "copyright": "AmazonX",
+    "topmenu_links": [
+        {"name": "Home", "url": "/", "new_window": True},
+        {"name": "View Site", "url": "/", "new_window": True},
+    ],
+    "show_sidebar": True,
+    "navigation_expanded": True,
+}
+
+
 
 
 # --------------------------------------------------

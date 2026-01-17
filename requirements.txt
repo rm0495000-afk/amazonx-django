@@ -1,4 +1,4 @@
 Django>=5.0,<6.1
 gunicorn
-django-unfold
+django-jazzmin
 Pillow
