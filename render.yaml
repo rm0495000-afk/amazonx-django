@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: amazonx-django
+    env: python
+    buildCommand: bash build.sh
+    startCommand: gunicorn ecom.wsgi:application
