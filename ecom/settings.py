@@ -1,6 +1,6 @@
 """
 Django settings for ecom project.
-Compatible with django-unfold + Render deployment
+Jazzmin + Render SAFE configuration
 """
 
 from pathlib import Path
@@ -14,8 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # --------------------------------------------------
 # SECURITY
 # --------------------------------------------------
-SECRET_KEY = 'django-insecure-9wixmm73*kzpfbn%5d!ky!k7+$4mazbhlk4d)^w@@1#g6ot(=t'
-DEBUG = True   # Render-la ippo True (login create panna)
+SECRET_KEY = "django-insecure-9wixmm73*kzpfbn%5d!ky!k7+$4mazbhlk4d)^w@@1#g6ot(=t"
+
+DEBUG = True   # ⚠️ Deploy mudinja apram False podu
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -26,8 +27,9 @@ ALLOWED_HOSTS = [
 
 # --------------------------------------------------
 # APPLICATIONS
+# --------------------------------------------------
 INSTALLED_APPS = [
-    "jazzmin",   # 🔥 MUST BE ABSOLUTE FIRST
+    "jazzmin",                  # 🔥 MUST BE FIRST
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -37,18 +39,6 @@ INSTALLED_APPS = [
 
     "amazon.apps.AmazonConfig",
 ]
-
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-
-
-# --------------------------------------------------
-# JAZZMIN ADMIN THEME CONFIG
-# --------------------------------------------------
-
-
-
 
 
 # --------------------------------------------------
@@ -129,8 +119,12 @@ USE_TZ = True
 
 
 # --------------------------------------------------
+# STATIC FILES  🔥 MOST IMPORTANT FOR JAZZMIN
+# --------------------------------------------------
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-
+# ❌ DO NOT ADD STATICFILES_DIRS
 
 
 # --------------------------------------------------
@@ -146,11 +140,23 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
+# --------------------------------------------------
+# JAZZMIN CONFIG
+# --------------------------------------------------
+JAZZMIN_SETTINGS = {
+    "site_title": "AmazonX Admin",
+    "site_header": "AmazonX Dashboard",
+    "site_brand": "AmazonX",
+    "welcome_sign": "Welcome to AmazonX Admin",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+}
+
 
 # --------------------------------------------------
 # 🔥 TEMP AUTO ADMIN (RENDER LOGIN FIX)
 # --------------------------------------------------
-# ⚠️ REMOVE THIS BLOCK AFTER LOGIN SUCCESS
+# ⚠️ Deploy mudinja apram indha block remove pannu
 if DEBUG:
     try:
         from django.contrib.auth.models import User
@@ -162,13 +168,3 @@ if DEBUG:
             )
     except Exception:
         pass
-
-JAZZMIN_SETTINGS = {
-    "site_title": "AmazonX Admin",
-    "site_header": "AmazonX Dashboard",
-    "site_brand": "AmazonX",
-    "welcome_sign": "Welcome to AmazonX Admin",
-    "copyright": "AmazonX",
-    "show_sidebar": True,
-    "navigation_expanded": True,
-}
