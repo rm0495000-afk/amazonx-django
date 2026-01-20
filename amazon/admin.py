@@ -25,12 +25,12 @@ class ReviewAdmin(ModelAdmin):
 
 
 # ===============================
-# 📦 ORDER ITEM INLINE (FIXED)
+# 📦 ORDER ITEM INLINE
 # ===============================
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
-    readonly_fields = ("price", "quantity")   # ✅ FIX
+    readonly_fields = ("price", "quantity")
 
 
 # ===============================
