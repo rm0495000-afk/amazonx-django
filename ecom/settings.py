@@ -1,6 +1,6 @@
 """
 Django settings for ecom project.
-Jazzmin + Render SAFE configuration
+UNFOLD + Render SAFE configuration
 """
 
 from pathlib import Path
@@ -14,9 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # --------------------------------------------------
 # SECURITY
 # --------------------------------------------------
-SECRET_KEY = "django-insecure-9wixmm73*kzpfbn%5d!ky!k7+$4mazbhlk4d)^w@@1#g6ot(=t"
+SECRET_KEY = "django-insecure-change-this-in-production"
 
-DEBUG = True   # ⚠️ Deploy mudinja apram False podu
+DEBUG = True   # 🔴 Render deploy mudinja apram False podu
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -29,7 +29,7 @@ ALLOWED_HOSTS = [
 # APPLICATIONS
 # --------------------------------------------------
 INSTALLED_APPS = [
-    "jazzmin",                  # 🔥 MUST BE FIRST
+    "unfold",                  # ⭐ MUST BE FIRST
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -88,7 +88,7 @@ WSGI_APPLICATION = "ecom.wsgi.application"
 
 
 # --------------------------------------------------
-# DATABASE
+# DATABASE (Render SAFE)
 # --------------------------------------------------
 DATABASES = {
     "default": {
@@ -119,16 +119,14 @@ USE_TZ = True
 
 
 # --------------------------------------------------
-# STATIC FILES  🔥 MOST IMPORTANT FOR JAZZMIN
+# STATIC FILES (UNFOLD NEEDS THIS)
 # --------------------------------------------------
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# ❌ DO NOT ADD STATICFILES_DIRS
-
 
 # --------------------------------------------------
-# MEDIA FILES
+# MEDIA FILES (PRODUCT IMAGES)
 # --------------------------------------------------
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -138,33 +136,3 @@ MEDIA_ROOT = BASE_DIR / "media"
 # DEFAULT PRIMARY KEY
 # --------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-
-# --------------------------------------------------
-# JAZZMIN CONFIG
-# --------------------------------------------------
-JAZZMIN_SETTINGS = {
-    "site_title": "AmazonX Admin",
-    "site_header": "AmazonX Dashboard",
-    "site_brand": "AmazonX",
-    "welcome_sign": "Welcome to AmazonX Admin",
-    "show_sidebar": True,
-    "navigation_expanded": True,
-}
-
-
-# --------------------------------------------------
-# 🔥 TEMP AUTO ADMIN (RENDER LOGIN FIX)
-# --------------------------------------------------
-# ⚠️ Deploy mudinja apram indha block remove pannu
-if DEBUG:
-    try:
-        from django.contrib.auth.models import User
-        if not User.objects.filter(username="admin").exists():
-            User.objects.create_superuser(
-                username="admin",
-                email="admin@example.com",
-                password="admin123"
-            )
-    except Exception:
-        pass
