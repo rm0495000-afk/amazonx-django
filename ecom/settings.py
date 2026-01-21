@@ -1,35 +1,25 @@
-"""
-Django settings for ecom project.
-UNFOLD + Render SAFE configuration
-"""
-
 from pathlib import Path
+import os
+import dj_database_url
 
-# --------------------------------------------------
-# BASE
-# --------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# --------------------------------------------------
-# SECURITY
-# --------------------------------------------------
-SECRET_KEY = "django-insecure-change-this-in-production"
+# ---------------- SECURITY ----------------
+SECRET_KEY = "django-insecure-change-this"
 
-DEBUG = True   # 🔴 Render deploy mudinja apram False podu
+DEBUG = False   # MUST be False in Render
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
     ".onrender.com",
+    "localhost",
+    "127.0.0.1",
 ]
 
 
-# --------------------------------------------------
-# APPLICATIONS
-# --------------------------------------------------
+# ---------------- APPS ----------------
 INSTALLED_APPS = [
-    "unfold",                  # ⭐ MUST BE FIRST
+    "unfold",                       # MUST be first
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -37,15 +27,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    "amazon.apps.AmazonConfig",
+    "amazon",
 ]
 
 
-# --------------------------------------------------
-# MIDDLEWARE
-# --------------------------------------------------
+# ---------------- MIDDLEWARE ----------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # REQUIRED
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -55,19 +44,15 @@ MIDDLEWARE = [
 ]
 
 
-# --------------------------------------------------
-# URLS
-# --------------------------------------------------
+# ---------------- URLS ----------------
 ROOT_URLCONF = "ecom.urls"
 
 
-# --------------------------------------------------
-# TEMPLATES
-# --------------------------------------------------
+# ---------------- TEMPLATES ----------------
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "amazon" / "templates"],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -81,58 +66,40 @@ TEMPLATES = [
 ]
 
 
-# --------------------------------------------------
-# WSGI
-# --------------------------------------------------
+# ---------------- WSGI ----------------
 WSGI_APPLICATION = "ecom.wsgi.application"
 
 
-# --------------------------------------------------
-# DATABASE (Render SAFE)
-# --------------------------------------------------
+# ---------------- DATABASE (POSTGRESQL 🔥) ----------------
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.parse(
+        os.environ.get("DATABASE_URL")
+    )
 }
 
 
-# --------------------------------------------------
-# PASSWORD VALIDATION
-# --------------------------------------------------
-AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
-]
+# ---------------- STATIC FILES ----------------
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_STORAGE = (
+    "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
+
+# ❌ DO NOT USE STATICFILES_DIRS IN PRODUCTION
 
 
-# --------------------------------------------------
-# INTERNATIONALIZATION
-# --------------------------------------------------
+# ---------------- MEDIA ----------------
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+
+# ---------------- I18N ----------------
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
 
-# --------------------------------------------------
-# STATIC FILES (UNFOLD NEEDS THIS)
-# --------------------------------------------------
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-
-# --------------------------------------------------
-# MEDIA FILES (PRODUCT IMAGES)
-# --------------------------------------------------
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
-
-
-# --------------------------------------------------
-# DEFAULT PRIMARY KEY
-# --------------------------------------------------
+# ---------------- DEFAULT PK ----------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

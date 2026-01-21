@@ -3,8 +3,12 @@ services:
     name: django-app
     env: python
     plan: free
+
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
-      python manage.py migrate
-    startCommand: gunicorn ecom.wsgi:application
+
+    startCommand: |
+      python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      gunicorn ecom.wsgi:application
