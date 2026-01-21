@@ -40,7 +40,6 @@ a {
 
 .blog-card {
     background: #ffffff;
-    border: none;
     border-radius: 15px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -92,29 +91,17 @@ a {
 }
 
 /* ===============================
-   PRICE / META
+   PRICE
 ================================ */
 
 .price {
     font-size: 18px;
     font-weight: 700;
     color: #111;
-    margin-top: 8px;
 }
 
 /* ===============================
-   GRID FIX (PRODUCT LIST)
-================================ */
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-/* ===============================
-   FORMS (LOGIN / REGISTER)
+   FORMS
 ================================ */
 
 form {
@@ -141,7 +128,6 @@ button {
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 button:hover {
