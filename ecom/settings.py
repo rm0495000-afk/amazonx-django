@@ -2,17 +2,21 @@ from pathlib import Path
 import os
 import dj_database_url
 
-# ---------------- BASE ----------------
+# ==================================================
+# BASE
+# ==================================================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# ---------------- SECURITY ----------------
+# ==================================================
+# SECURITY
+# ==================================================
 SECRET_KEY = os.environ.get(
     "SECRET_KEY",
     "django-insecure-change-this"
 )
 
-DEBUG = False  # MUST be False in Render
+DEBUG = False   # MUST be False on Render
 
 ALLOWED_HOSTS = [
     ".onrender.com",
@@ -21,9 +25,12 @@ ALLOWED_HOSTS = [
 ]
 
 
-# ---------------- APPS ----------------
+# ==================================================
+# APPLICATIONS
+# ==================================================
 INSTALLED_APPS = [
     "unfold",                       # MUST be first
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -40,10 +47,13 @@ INSTALLED_APPS = [
 ]
 
 
-# ---------------- MIDDLEWARE ----------------
+# ==================================================
+# MIDDLEWARE
+# ==================================================
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # STATIC FIX
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -53,11 +63,15 @@ MIDDLEWARE = [
 ]
 
 
-# ---------------- URLS ----------------
+# ==================================================
+# URL CONFIG
+# ==================================================
 ROOT_URLCONF = "ecom.urls"
 
 
-# ---------------- TEMPLATES ----------------
+# ==================================================
+# TEMPLATES
+# ==================================================
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -75,11 +89,15 @@ TEMPLATES = [
 ]
 
 
-# ---------------- WSGI ----------------
+# ==================================================
+# WSGI
+# ==================================================
 WSGI_APPLICATION = "ecom.wsgi.application"
 
 
-# ---------------- DATABASE ----------------
+# ==================================================
+# DATABASE (PostgreSQL / SQLite fallback)
+# ==================================================
 DATABASES = {
     "default": dj_database_url.parse(
         os.environ.get(
@@ -92,7 +110,9 @@ DATABASES = {
 }
 
 
-# ---------------- STATIC FILES ----------------
+# ==================================================
+# STATIC FILES (WhiteNoise)
+# ==================================================
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -103,7 +123,9 @@ STATICFILES_STORAGE = (
 # ❌ DO NOT USE STATICFILES_DIRS in production
 
 
-# ---------------- CLOUDINARY (MEDIA FILES) ----------------
+# ==================================================
+# CLOUDINARY (MEDIA FILES)
+# ==================================================
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
     "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
@@ -114,15 +136,23 @@ DEFAULT_FILE_STORAGE = (
     "cloudinary_storage.storage.MediaCloudinaryStorage"
 )
 
-# MEDIA_URL / MEDIA_ROOT optional now (Cloudinary handle pannum)
+
+# ==================================================
+# MOBILE 404 FIX (VERY IMPORTANT 🔥)
+# ==================================================
+APPEND_SLASH = True
 
 
-# ---------------- I18N ----------------
+# ==================================================
+# INTERNATIONALIZATION
+# ==================================================
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
 
-# ---------------- DEFAULT PK ----------------
+# ==================================================
+# DEFAULT PRIMARY KEY
+# ==================================================
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
